@@ -1,0 +1,36 @@
+<div class="flex items-center justify-center min-h-screen bg-slate-200">
+  <div class="login-container bg-[#1FC2F3] rounded-lg shadow-lg p-8 w-96">
+    <h2 class="text-2xl font-bold text-center text-white mb-6">Login</h2>
+
+    <form (ngSubmit)="login()" class="flex flex-col space-y-4">
+      <input 
+        type="text" 
+        [(ngModel)]="userName" 
+        name="userName" 
+        placeholder="Username" 
+        required
+        class="p-3 rounded border border-white bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#090071]"
+      >
+
+      <input 
+        type="password" 
+        [(ngModel)]="password" 
+        name="password" 
+        placeholder="Password" 
+        required
+        class="p-3 rounded border border-white bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#090071]"
+      >
+
+      <button 
+        type="submit" 
+        class="bg-[#090071] hover:bg-[#06004d] text-white font-semibold py-2 rounded transition duration-300"
+      >
+        Login
+      </button>
+
+      <div *ngIf="errorMessage" class="text-red-700 text-center mt-2 font-medium">
+        {{ errorMessage }}
+      </div>
+    </form>
+  </div>
+</div>
