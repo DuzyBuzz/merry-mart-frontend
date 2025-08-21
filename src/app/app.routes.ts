@@ -13,18 +13,22 @@ export const routes: Routes = [
   },
   {
     path: 'admin',
-    loadComponent: () => import('./pages/admin/admin.component').then(m => m.AdminComponent), // parent component
+    loadComponent: () => import('./pages/admin/admin.component').then(m => m.AdminComponent), 
     canActivate: [authGuard],
     data: { role: 'admin' },
   },
   {
     path: 'user',
-    loadComponent: () => import('./pages/user/user.component').then(m => m.UserComponent), // parent component
+    loadComponent: () => import('./pages/user/user.component').then(m => m.UserComponent),
     canActivate: [authGuard],
     data: { role: 'user' },
     children: [
       {
-        path: 'payment',
+        path: '**',
+        redirectTo: 'payments'
+      },      
+      {
+        path: 'payments',
         loadComponent: () => import('./pages/user/payments/payments.component').then(m => m.PaymentsComponent)
       },
 
