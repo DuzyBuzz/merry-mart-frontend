@@ -4,10 +4,11 @@
 
 /* customize scrollbar for main content */
 main::-webkit-scrollbar {
-  width: 8px;
+  width: 1px;
+  height: 5px;
 }
 
 main::-webkit-scrollbar-thumb {
-  background-color: rgb(31,194,243);
-  border-radius: 4px;
+  background-color: #0F4578;
+  border-radius: 10px;
 }

@@ -17,5 +17,5 @@ export const authGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: R
     
   }
 
-  return true; // correct user role
+  return true; // correct user role 
 };
