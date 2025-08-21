@@ -23,15 +23,15 @@ export const routes: Routes = [
     canActivate: [authGuard],
     data: { role: 'user' },
     children: [
-      {
-        path: '**',
-        redirectTo: 'payments'
-      },      
+   
       {
         path: 'payments',
         loadComponent: () => import('./pages/user/payments/payments.component').then(m => m.PaymentsComponent)
       },
-
+      {
+        path: 'expenses',
+        loadComponent: () => import('./pages/user/expenses/expenses.component').then(m => m.ExpensesComponent)
+      },
     ]
   },
   {

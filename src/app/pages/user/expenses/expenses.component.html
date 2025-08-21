@@ -1,0 +1,212 @@
+<div class="max-w-full mx-auto mt-0 bg-white rounded-lg shadow p-6">
+  <div>
+    <h1 class="text-3xl font-bold text-gray-800">Expenses</h1>
+  </div>
+  <!-- Top Bar -->
+  <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+    <div class="flex flex-1 items-center gap-2 justify-between">
+      <div>
+      <input 
+        type="text"
+        placeholder="Search payments..."
+        [(ngModel)]="searchTerm"
+        (input)="onSearch()"
+        class="border border-gray-300 rounded px-3 py-2 w-full md:w-64 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+        <button 
+          class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded ml-2"
+          (click)="showModal = true"
+        >
+          Create Expenses
+        </button>
+      </div>
+          <div class="flex flex-col md:flex-row items-start md:items-center gap-4 bg-white p-4 rounded-lg shadow border border-gray-200">
+            <!-- Date From -->
+            <div class="flex items-center gap-2">
+              <label for="paymentDateFrom" class="text-gray-700 font-medium">From:</label>
+              <input 
+                type="date" 
+                id="paymentDateFrom" 
+                (ngModelChange)="onSearch()" 
+                class="border border-gray-300 rounded-md px-3 py-2 w-44 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+              >
+            </div>
+
+            <!-- Date To -->
+            <div class="flex items-center gap-2">
+              <label for="paymentDateTo" class="text-gray-700 font-sm">To:</label>
+              <input 
+                type="date" 
+                id="paymentDateTo" 
+                (ngModelChange)="onSearch()" 
+                class="border border-gray-300 rounded-md px-3 py-2 w-44 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+              >
+            </div>
+          </div>
+    </div>
+  </div>
+
+<!-- Payment Table -->
+<div class="overflow-auto max-h-[650px] border border-gray-200 rounded">
+<table class="min-w-full bg-white">
+  <thead class="sticky top-0 bg-gray-100 z-10">
+    <tr>
+      <th class="py-2 px-4 border-b text-center">Customer Name</th>
+      <th class="py-2 px-4 border-b text-center">Business Name</th>
+      <th class="py-2 px-4 border-b text-center">Category</th>
+      <th class="py-2 px-4 border-b text-center">Amount</th>
+      <th class="py-2 px-4 border-b text-center">VAT</th>
+      <th class="py-2 px-4 border-b text-center">Date</th>
+      <th class="py-2 px-4 border-b text-center">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let e of filteredExpenses">
+      <td class="py-2 px-4 border-b text-center">{{ e.customerName }}</td>
+      <td class="py-2 px-4 border-b text-center">{{ e.businessName }}</td>
+      <td class="py-2 px-4 border-b text-center">{{ e.expensesCategory }}</td>
+      <td class="py-2 px-4 border-b text-center">{{ e.expensesAmount }}</td>
+      <td class="py-2 px-4 border-b text-center">{{ e.vatAmount }}</td>
+      <td class="py-2 px-4 border-b text-center">{{ e.expensesDate }}</td>
+      <td class="py-2 px-4 border-b text-center">
+        <button class="text-red-600 hover:underline" (click)="deleteExpense(e.expensesId)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+</div>
+
+
+<!-- Expense Modal -->
+<div *ngIf="showModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
+  <div class="bg-white rounded-lg shadow-xl w-full max-w-3xl p-6 relative">
+    
+    <!-- Close button -->
+    <button 
+      class="absolute top-3 right-3 text-gray-500 hover:text-gray-700 text-2xl font-bold"
+      (click)="showModal = false"
+    >&times;</button>
+    
+    <h3 class="text-xl font-semibold mb-4 text-gray-700">Create Expenses</h3>
+    
+    <!-- Form -->
+    <form (ngSubmit)="submitExpense()" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      
+
+      <!-- Expenses Date -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Expenses Date</label>
+        <input type="date" [(ngModel)]="newExpense.expensesDate" name="expensesDate" required
+          class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" />
+      </div>
+
+      <!-- Voucher No -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Voucher No</label>
+        <input type="text" [(ngModel)]="newExpense.voucherNo" name="voucherNo" required
+          class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" />
+      </div>
+
+      <!-- Check No -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Check No</label>
+        <input type="text" [(ngModel)]="newExpense.checkNo" name="checkNo"
+          class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" />
+      </div>
+
+      <!-- BIR Receipt No -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">BIR Receipt No</label>
+        <input type="text" [(ngModel)]="newExpense.birReceiptNo" name="birReceiptNo"
+          class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" />
+      </div>
+
+      <!-- Expenses Category -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Expenses Category</label>
+        <select [(ngModel)]="newExpense.expensesCategory" name="expensesCategory" required
+          class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+          <option value="Utilities">Utilities</option>
+          <option value="Supplies">Supplies</option>
+          <option value="Maintenance">Maintenance</option>
+          <option value="Others">Others</option>
+        </select>
+      </div>
+
+      <!-- Business Name -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Business Name</label>
+        <input type="text" [(ngModel)]="newExpense.businessName" name="businessName"
+          class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" />
+      </div>
+
+      <!-- Application Date -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Application Date</label>
+        <input type="date" [(ngModel)]="newExpense.applicationDate" name="applicationDate"
+          class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" />
+      </div>
+
+      <!-- TIN No -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">TIN No</label>
+        <input type="text" [(ngModel)]="newExpense.tinNo" name="tinNo"
+          class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" />
+      </div>
+
+      <!-- Address -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Address</label>
+        <input type="text" [(ngModel)]="newExpense.address" name="address"
+          class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" />
+      </div>
+
+      <!-- Expenses Amount -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Expenses Amount</label>
+        <input type="number" [(ngModel)]="newExpense.expensesAmount" name="expensesAmount" required
+          class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" />
+      </div>
+
+      <!-- VAT Amount -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">VAT Amount</label>
+        <input type="number" [(ngModel)]="newExpense.vatAmount" name="vatAmount"
+          class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" />
+      </div>
+
+      <!-- Customer Name -->
+      <div class="md:col-span-1">
+        <label class="block text-sm font-medium text-gray-700 mb-1">Customer Name</label>
+        <input type="text" [(ngModel)]="newExpense.customerName" name="customerName" required
+          class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" />
+      </div>
+
+      <!-- Submit Button -->
+      <div class="md:col-span-2">
+        <button type="submit"
+          class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded w-full mt-2">
+          Submit Expense
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+
+
+
+
+<!-- Buttons fixed to lower-left corner -->
+<div class="fixed bottom-4 right-4 flex flex-col md:flex-row gap-2 z-50">
+  <button 
+    class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded">
+    Print Report
+  </button>
+  <button 
+    class="bg-green-600 hover:bg-green-700 text-white font-semibold px-4 py-2 rounded">
+    Export Report
+  </button>
+</div>
