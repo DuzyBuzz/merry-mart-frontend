@@ -1,0 +1,132 @@
+<div class="max-w-full mx-auto mt-0 bg-white rounded-lg shadow p-6">
+  <div>
+    <h1 class="text-3xl font-bold text-gray-800">Users</h1>
+  </div>
+
+  <!-- Top Bar -->
+  <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+    <div class="flex flex-1 items-center gap-2 justify-between">
+      <div>
+        <input 
+          type="text"
+          placeholder="Search users..."
+          [(ngModel)]="searchTerm"
+          (input)="onSearch()"
+          class="border border-gray-300 rounded px-3 py-2 w-full md:w-64 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        <button 
+          class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded ml-2"
+          (click)="showModal = true"
+        >
+          Create User
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Users Table -->
+  <div class="overflow-auto max-h-[650px] border border-gray-200 rounded">
+    <table class="min-w-full bg-white">
+      <thead class="sticky top-0 bg-gray-200 z-10">
+        <tr>
+          <th class="py-2 px-4 border-b text-center">First Name</th>
+          <th class="py-2 px-4 border-b text-center">Last Name</th>
+          <th class="py-2 px-4 border-b text-center">Username</th>
+          <th class="py-2 px-4 border-b text-center">Position</th>
+          <th class="py-2 px-4 border-b text-center">Role</th>
+          <th class="py-2 px-4 border-b text-center">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of filteredUsers">
+          <td class="py-2 px-4 border-b text-center">{{ user.firstName }}</td>
+          <td class="py-2 px-4 border-b text-center">{{ user.lastName }}</td>
+          <td class="py-2 px-4 border-b text-center">{{ user.userName }}</td>
+          <td class="py-2 px-4 border-b text-center">{{ user.position }}</td>
+          <td class="py-2 px-4 border-b text-center">{{ user.role }}</td>
+          <td class="py-2 px-4 border-b text-center">
+            <button class="text-blue-600 hover:underline mr-2" (click)="editUser(user)">Edit</button>
+            <button class="text-red-600 hover:underline" (click)="deleteUser(user.userId)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Buttons fixed to lower-right corner -->
+  <div class="fixed bottom-4 right-4 flex flex-col md:flex-row gap-2 z-50">
+    <button 
+      class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded">
+      Print Report
+    </button>
+    <button 
+      class="bg-green-600 hover:bg-green-700 text-white font-semibold px-4 py-2 rounded">
+      Export Report
+    </button>
+  </div>
+
+  <!-- User Modal -->
+  <div *ngIf="showModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
+    <div class="bg-white rounded-lg shadow-xl w-full max-w-3xl p-6 relative">
+
+      <!-- Close button -->
+      <button 
+        class="absolute top-3 right-3 text-gray-500 hover:text-gray-700 text-2xl font-bold"
+        (click)="closeModal()"
+      >&times;</button>
+
+      <h3 class="text-xl font-semibold mb-4 text-gray-700">{{ editingUser ? 'Edit User' : 'Create User' }}</h3>
+
+      <!-- Form -->
+      <form (ngSubmit)="submitUser()" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+          <input type="text" [(ngModel)]="currentUser.firstName" name="firstName" required
+            class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+          <input type="text" [(ngModel)]="currentUser.lastName" name="lastName" required
+            class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Username</label>
+          <input type="text" [(ngModel)]="currentUser.userName" name="userName" required
+            class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+          <input type="password" [(ngModel)]="currentUser.password" name="password" required
+            class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Position</label>
+          <input type="text" [(ngModel)]="currentUser.position" name="position"
+            class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Role</label>
+          <select [(ngModel)]="currentUser.role" name="role" required
+            class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+            <option value="ADMIN">Admin</option>
+            <option value="USER">User</option>
+          </select>
+        </div>
+
+        <div class="md:col-span-2">
+          <button type="submit"
+            class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded w-full mt-2">
+            {{ editingUser ? 'Update User' : 'Create User' }}
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

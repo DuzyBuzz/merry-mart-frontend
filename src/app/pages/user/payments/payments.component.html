@@ -49,7 +49,7 @@
 <!-- Payment Table -->
 <div class="overflow-auto max-h-[650px] border border-gray-200 rounded">
   <table class="min-w-full bg-white">
-    <thead class="sticky top-0 bg-gray-100 z-10">
+    <thead class="sticky top-0 bg-gray-200 z-10">
       <tr>
         <th class="py-2 px-4 border-b text-center">Customer Name</th>
         <th class="py-2 px-4 border-b text-center">Status</th>
@@ -78,6 +78,16 @@
       </tr>
     </tbody>
   </table>
+  <!-- Buttons fixed to lower-left corner -->
+<div class="fixed bottom-4 right-4 flex flex-col md:flex-row gap-2 z-50">
+  <button 
+    class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded">
+    Print Report
+  </button>
+  <button 
+    class="bg-green-600 hover:bg-green-700 text-white font-semibold px-4 py-2 rounded">
+    Export Report
+  </button>
 </div>
 
 
@@ -136,14 +146,5 @@
   </div>
 
 
-<!-- Buttons fixed to lower-left corner -->
-<div class="fixed bottom-4 right-4 flex flex-col md:flex-row gap-2 z-50">
-  <button 
-    class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded">
-    Print Report
-  </button>
-  <button 
-    class="bg-green-600 hover:bg-green-700 text-white font-semibold px-4 py-2 rounded">
-    Export Report
-  </button>
+
 </div>

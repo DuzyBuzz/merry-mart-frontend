@@ -20,7 +20,7 @@
     'translate-x-0': isSidebarOpen,
     '-translate-x-full': !isSidebarOpen
   }"
-  class="fixed top-0 left-0 z-40 h-full w-64 bg-[#06A7EE] text-white flex flex-col transform transition-transform duration-300 md:translate-x-0 md:static md:flex">
+  class="fixed top-0 left-0 z-40 h-full w-50 bg-[#06A7EE] text-white flex flex-col transform transition-transform duration-300 md:translate-x-0 md:static md:flex">
 
     <!-- Logo -->
     <div class="flex items-center justify-start h-20 border-b bg-[#0F4578] px-4">
@@ -34,10 +34,12 @@
     <!-- Navigation Buttons -->
     <nav class="flex-1 mt-4">
       <ul class="flex flex-col space-y-2 px-4">
-        <li><a routerLink="/user/payments" routerLinkActive="bg-purple-700" class="block px-4 py-2 rounded hover:bg-green-500">Payment</a></li>
+        <li><a routerLink="/user/items" routerLinkActive="bg-purple-700" class="block px-4 py-2 rounded hover:bg-green-500">Items</a></li>
+        <li><a routerLink="/user/payments" routerLinkActive="bg-purple-700" class="block px-4 py-2 rounded hover:bg-green-500">Payments</a></li>
         <li><a routerLink="/user/orders" routerLinkActive="bg-purple-700" class="block px-4 py-2 rounded hover:bg-green-500">Orders</a></li>
-        <li><a routerLink="/user/return" routerLinkActive="bg-purple-700" class="block px-4 py-2 rounded hover:bg-green-500">Return</a></li>
+        <li><a routerLink="/user/returns" routerLinkActive="bg-purple-700" class="block px-4 py-2 rounded hover:bg-green-500">Returns</a></li>
         <li><a routerLink="/user/expenses" routerLinkActive="bg-purple-700" class="block px-4 py-2 rounded hover:bg-green-500">Expenses</a></li>
+        <li><a routerLink="/user/discounts-and-promotions" routerLinkActive="bg-purple-700" class="block px-4 py-2 rounded hover:bg-green-500">Discounts & Promotions</a></li>
         <li><a routerLink="/user/customer-balance" routerLinkActive="bg-purple-700" class="block px-4 py-2 rounded hover:bg-green-500">Customer Balance Sheet</a></li>
       </ul>
     </nav>
