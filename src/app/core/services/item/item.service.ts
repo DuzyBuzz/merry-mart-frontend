@@ -21,15 +21,15 @@ export class ItemService {
     return this.http.get<Item[]>(this.apiUrl);
   }
 
-  getById(itemId: string): Observable<Item> {
+  getById(itemId: number): Observable<Item> {
     return this.http.get<Item>(`${this.apiUrl}/${itemId}`);
   }
 
-  updateItem(itemId: string, item: Item): Observable<Item> {
+  updateItem(itemId: number, item: Item): Observable<Item> {
     return this.http.put<Item>(`${this.apiUrl}/${itemId}`, item);
   }
 
-  deleteItem(itemId: string): Observable<void> {
+  deleteItem(itemId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${itemId}`);
   }
 }

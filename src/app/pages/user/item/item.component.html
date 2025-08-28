@@ -32,11 +32,10 @@
         <tr>
           <th class="py-2 px-4 border-b text-center">Item Name</th>
           <th class="py-2 px-4 border-b text-center">Description</th>
-          <th class="py-2 px-4 border-b text-center">Price</th>
+          <th class="py-2 px-4 border-b text-center">Capital Cost</th>
+          <th class="py-2 px-4 border-b text-center">Selling Price</th>
           <th class="py-2 px-4 border-b text-center">Quantity</th>
           <th class="py-2 px-4 border-b text-center">Category</th>
-          <th class="py-2 px-4 border-b text-center">Listed Date</th>
-          <th class="py-2 px-4 border-b text-center">Expiration Date</th>
           <th class="py-2 px-4 border-b text-center">Actions</th>
         </tr>
       </thead>
@@ -44,11 +43,10 @@
         <tr *ngFor="let item of filteredItems">
           <td class="py-2 px-4 border-b text-center">{{ item.itemName }}</td>
           <td class="py-2 px-4 border-b text-center">{{ item.description }}</td>
-          <td class="py-2 px-4 border-b text-center">{{ item.price }}</td>
+          <td class="py-2 px-4 border-b text-center">{{ item.capitalCost }}</td>
+          <td class="py-2 px-4 border-b text-center">{{ item.sellingPrice }}</td>
           <td class="py-2 px-4 border-b text-center">{{ item.stockQuantity }}</td>
           <td class="py-2 px-4 border-b text-center">{{ getCategoryName(item.categoryId)  }}</td>
-          <td class="py-2 px-4 border-b text-center">{{ item.timeListed | date }}</td>
-          <td class="py-2 px-4 border-b text-center">{{ item.expirationDate | date }}</td>
           <td class="py-2 px-4 border-b text-center">
             <button
               class="text-red-600 hover:underline"
@@ -114,12 +112,23 @@
           />
         </div>
 
-        <!-- Price -->
+        <!-- Capital Cost -->
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Price</label>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Capital Cost</label>
           <input
             type="number"
-            [(ngModel)]="newItem.price"
+            [(ngModel)]="newItem.capitalCost"
+            name="price"
+            required
+            class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+          />
+        </div>
+        <!-- Selling Price -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Selling Price</label>
+          <input
+            type="number"
+            [(ngModel)]="newItem.sellingPrice"
             name="price"
             required
             class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
@@ -166,28 +175,8 @@
         </div>
 
 
-        <!-- Listed Date -->
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Time Listed</label>
-          <input
-            type="date"
-            [(ngModel)]="newItem.timeListed"
-            name="timeListed"
-            required
-            class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-          />
-        </div>
 
-        <!-- Expiration Date -->
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Expiration Date</label>
-          <input
-            type="date"
-            [(ngModel)]="newItem.expirationDate"
-            name="expirationDate"
-            class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-          />
-        </div>
+
 
 
         <!-- Submit -->

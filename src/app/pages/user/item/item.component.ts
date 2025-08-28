@@ -22,15 +22,13 @@ export class ItemComponent implements OnInit {
 
 
   newItem: Item = {
-    itemId: '',
+    itemId: 0,
     itemName: '',
     description: '',
-    price: 0,
+    sellingPrice: 0,
+    capitalCost: 0,
     stockQuantity: 0,
-    timeListed: '',
-    expirationDate: '',
     categoryId: 0,
-    userID: ''
   };
 
   newCategory: Category = {
@@ -89,11 +87,9 @@ submitItem(): void {
 
 
   // this.newItem.userID = this.authService.getUser(); 
-
   this.itemService.createItem(this.newItem).subscribe({
     next: (item) => {
       this.items.push(item);
-      this.filteredItems = this.items;
       this.resetItemForm();
       this.showItemModal = false;
     },
@@ -119,31 +115,30 @@ getCategoryName(categoryId: number): string {
   return category ? category.categoryName : 'Unknown';
 }
 
+deleteItem(itemId: number): void {
+  if (!confirm('Are you sure you want to delete this item?')) return;
 
-  deleteItem(itemId: string): void {
-    if (!confirm('Are you sure you want to delete this item?')) return;
+  this.itemService.deleteItem(itemId).subscribe({
+    next: () => {
+      this.items = this.items.filter(i => i.itemId !== itemId);
+      this.filteredItems = this.filteredItems.filter(i => i.itemId !== itemId);
+    },
+    error: (err) => console.error('Error deleting item:', err)
+  });
+}
 
-    this.itemService.deleteItem(itemId).subscribe({
-      next: () => {
-        this.items = this.items.filter(i => i.itemId !== itemId);
-        this.filteredItems = this.filteredItems.filter(i => i.itemId !== itemId);
-      },
-      error: (err) => console.error('Error deleting item:', err)
-    });
-  }
 
   resetItemForm(): void {
     this.newItem = {
-      itemId: '',
+      itemId: 0,
       itemName: '',
       description: '',
-      price: 0,
+      sellingPrice: 0,
+      capitalCost: 0,
       stockQuantity: 0,
-      timeListed: '',
-      expirationDate: '',
       categoryId: 0,
-      userID: ''
     };
+    this.showItemModal = false;
   }
 
   resetCategoryForm(): void {

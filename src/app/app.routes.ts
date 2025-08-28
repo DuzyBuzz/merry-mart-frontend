@@ -35,8 +35,21 @@ export const routes: Routes = [
     data: { role: 'user' },
     children: [
       {
-        path: 'payment',
+        path: 'payments',
         loadComponent: () => import('./pages/user/payments/payments.component').then(m => m.PaymentsComponent)
+      },
+      {
+        path: 'items',
+        loadComponent: () => import('./pages/user/item/item.component').then(m => m.ItemComponent)
+      },
+      {
+        path: 'expenses',
+        loadComponent: () => import('./pages/user/expenses/expenses.component').then(m => m.ExpensesComponent)
+      },
+
+      {
+        path: 'customers',
+        loadComponent: () => import('./pages/user/customers/customers.component').then(m => m.CustomersComponent)
       },
     ]
   },

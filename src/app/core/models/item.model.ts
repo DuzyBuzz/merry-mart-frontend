@@ -1,13 +1,11 @@
 export interface Item {
-  itemId: string;       
+  itemId: number;       
   itemName: string;
   description: string;
-  price: number;
+  capitalCost: number;
+  sellingPrice: number;
   stockQuantity: number;
-  timeListed: string;     
-  expirationDate: string; 
   categoryId: number;   
-  userID: string;
 }
 
 export interface Category {
